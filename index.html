@@ -156,6 +156,19 @@
   <tr><td>7-Zip (or similar)</td><td>To extract <code>.7z</code> files &mdash; download from <a href="https://www.7-zip.org">7-zip.org</a></td></tr>
 </table>
 
+<div class="warning">
+  <strong>&#9432; Different HyperOS version or CN device?</strong>
+  <p>The provided <code>vbmeta.img</code>, <code>vbmeta_system.img</code>, and <code>patched_boot.img</code> are for HyperOS <strong>OS3.0.2.0.WNSEUXM</strong> (Global/EEA). If your device is on a different version or is a <strong>CN (Chinese) variant</strong>, these files may not work.</p>
+  <p><strong>CN devices cannot use Mi Unlock</strong> &mdash; they are unsupported by this guide. Look for help elsewhere.</p>
+  <p>To get the correct files for your device:</p>
+  <ol>
+    <li>Download your stock HyperOS fastboot ROM from <a href="https://miuirom.org/tablets/redmi-pad-pro">miuirom.org</a></li>
+    <li>Extract the <code>.tgz</code> with 7-Zip</li>
+    <li>If the ROM contains <code>payload.bin</code> instead of raw images, use <a href="https://github.com/vgdn1942/payload_dumper">payload_dumper</a> to extract them</li>
+    <li>Copy <code>vbmeta.img</code>, <code>vbmeta_system.img</code>, and <code>boot.img</code> into this folder, replacing the provided files</li>
+  </ol>
+</div>
+
 <div class="note">
   <strong>Already in this folder (do NOT download):</strong>
   <code>LineageOS-23.0-*-GAPPS-EXT4-GSI.7z</code> / <code>.img</code>,
@@ -221,10 +234,24 @@
   </ul>
 </div>
 
-<h3>3.3 Unlock with Mi Unlock Tool</h3>
+<h3>3.3 Get unlock authorization via Mi Community app</h3>
 <ol>
-  <li>Open the <code>Mi_Unlock_Tool</code> folder (included in this package) and run <code>miflash_unlock.exe</code></li>
-  <li>Run <code>miflash_unlock.exe</code> and sign in with the <strong>same Mi Account</strong> that's on your tablet</li>
+  <li>Install the <strong>Xiaomi Community app</strong> on your tablet (download from APKMirror or Xiaomi's site)</li>
+  <li>Open the app and sign in with your Mi Account</li>
+  <li>Go to <strong>Me</strong> &rarr; <strong>Unlock bootloader</strong> (may be under "Permissions" or "Services")</li>
+  <li>Follow the on-screen prompts to apply for unlock authorization &mdash; approval can be instant or take time</li>
+  <li>Once approved, you will receive confirmation in the app</li>
+</ol>
+
+<div class="warning">
+  <strong>&#9432; After approval</strong>
+  <p>The 168-hour binding timer still applies from when you added your account in Developer options (step 3.2). Check <strong>Settings &rarr; Additional settings &rarr; Developer options &rarr; Mi Unlock status</strong> to see remaining time.</p>
+</div>
+
+<h3>3.4 Unlock with Mi Unlock Tool</h3>
+<ol>
+  <li>Open the <code>Mi_Unlock_Tool</code> folder (included in this package)</li>
+  <li>Run <code>miflash_unlock.exe</code> and sign in with the <strong>same Mi Account</strong> used on your tablet</li>
   <li>Power off your tablet, then boot into <strong>fastboot mode</strong>: hold <strong>Volume Down + Power</strong> until you see the fastboot logo</li>
   <li>Connect the tablet to your PC with a USB cable</li>
   <li>In the Mi Unlock Tool, click <strong>Unlock</strong> &rarr; <strong>Unlock anyway</strong></li>
@@ -232,8 +259,7 @@
 </ol>
 
 <div class="note">
-  <strong>Note:</strong> If you see <em>"Please unlock 168 hours later"</em> or a similar timer, you must wait. After the waiting period, repeat from step 3.3 (power off &rarr; fastboot &rarr; unlock).<br><br>
-  <strong>Alternative (may skip wait):</strong> Install <strong>Xiaomi Community app</strong>, go to Me &rarr; Unlock bootloader. Some users report instant approval here.
+  <strong>Note:</strong> If you see <em>"Please unlock 168 hours later"</em> or a similar timer, you must wait. After the waiting period, repeat from step 3.4 (power off &rarr; fastboot &rarr; unlock).
 </div>
 
 <!-- ============================================================ -->
