@@ -1,0 +1,1 @@
+# Redmi-Pad-Pro-Dizi-AutoInstaller-lineage-os
