@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redmi Pad Pro — LineageOS GSI Install Guide</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 800px; margin: 0 auto; padding: 24px;
+    background: linear-gradient(135deg, rgba(15,12,41,0.85), rgba(48,43,99,0.75), rgba(36,36,62,0.8)), url('https://wallpapercave.com/wp/wp5136661.jpg') center/cover fixed;
+    color: #e0e0ff; line-height: 1.6;
+    min-height: 100vh;
+  }
+  h1, h2, h3 { color: #fff; font-weight: 500; letter-spacing: 0.3px; text-shadow: 0 2px 20px rgba(100,100,255,0.15); }
+  h1 { border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px; }
+  h2 { margin-top: 32px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px; }
+  .info-box {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 16px 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .info-box dt { color: rgba(255,255,255,0.5); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; }
+  .info-box dd { margin: 0 0 12px 0; font-size: 1.05em; }
+  .info-box dd:last-child { margin-bottom: 0; }
+  code {
+    background: rgba(255,255,255,0.08);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.92em;
+    color: #a8b4ff;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  pre {
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 16px;
+    overflow-x: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  pre code { background: none; padding: 0; color: #c8d0ff; border: none; }
+  .step {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+  }
+  .step .label { color: #7b8cff; font-weight: 600; font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.5px; }
+  .step h3 { margin: 4px 0 12px 0; }
+  .warning {
+    background: rgba(255,180,50,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,180,50,0.2);
+    border-radius: 14px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  }
+  .warning strong { color: #ffc853; }
+  .danger {
+    background: rgba(255,60,60,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,60,60,0.2);
+    border-radius: 14px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  }
+  .danger strong { color: #ff6b6b; }
+  .note { color: rgba(255,255,255,0.5); font-size: 0.92em; }
+  .footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.4);
+    font-size: 0.85em;
+  }
+  a { color: #7b8cff; text-decoration: none; }
+  a:hover { color: #a8b4ff; text-decoration: underline; }
+  ul, ol { padding-left: 20px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    vertical-align: top;
+    background: rgba(255,255,255,0.02);
+  }
+  table td:first-child { white-space: nowrap; font-weight: 600; color: #fff; }
+  .toc {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  }
+  .toc a { display: block; padding: 4px 0; }
+  .tag { display: inline-block; font-size: 0.75em; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+  .tag-blue { background: rgba(70,90,255,0.2); color: #8b9cff; border: 1px solid rgba(70,90,255,0.15); }
+  .tag-yellow { background: rgba(255,180,50,0.15); color: #ffc853; border: 1px solid rgba(255,180,50,0.1); }
+  .tag-red { background: rgba(255,60,60,0.15); color: #ff6b6b; border: 1px solid rgba(255,60,60,0.1); }
+  .tag-green { background: rgba(50,255,130,0.15); color: #50ff80; border: 1px solid rgba(50,255,130,0.1); }
+</style>
+</head>
+<body>
+
+<h1>Redmi Pad Pro &mdash; Stock to LineageOS GSI</h1>
+<p>Device: <strong>Redmi Pad Pro (dizi)</strong> &mdash; Complete guide: stock HyperOS &rarr; unlock bootloader &rarr; flash LineageOS GSI with GApps</p>
+
+<div class="info-box">
+  <dl>
+    <dt>Target ROM</dt>
+    <dd>LineageOS 23.0 (Android 16) &mdash; MisterZtr GSI &mdash; <span class="tag tag-blue">GAPPS-EXT4</span></dd>
+    <dt>Version</dt>
+    <dd>v2026.01.09-lineage23.0</dd>
+  </dl>
+</div>
+
+<div class="toc">
+  <strong>Contents</strong>
+  <a href="#requirements">1. Requirements (bring your own)</a>
+  <a href="#prereq">2. Prerequisites &amp; Backup</a>
+  <a href="#unlock">3. Unlock Bootloader</a>
+  <a href="#install">4. Flash LineageOS GSI</a>
+  <a href="#root">5. Root with KernelSU (optional)</a>
+  <a href="#trouble">6. Troubleshooting</a>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="requirements">1. Requirements (bring your own)</h2>
+
+<p>The following items are <strong>not</strong> included in this folder &mdash; you must obtain them yourself:</p>
+
+<table>
+  <tr><td>Redmi Pad Pro (dizi)</td><td>The device itself, charged to at least 70%</td></tr>
+  <tr><td>Windows PC</td><td>With a USB cable (original cable preferred)</td></tr>
+  <tr><td>Platform-tools (ADB + Fastboot)</td><td>Download from <a href="https://developer.android.com/studio/releases/platform-tools">Google's SDK Platform-Tools</a>, extract and drop the <code>platform-tools</code> folder here</td></tr>
+  <tr><td>Xiaomi Account</td><td>Create one if you don't have it &mdash; sign in on the tablet under Settings &rarr; Mi Account</td></tr>
+  <tr><td>Stock HyperOS Fastboot ROM</td><td>Download from <a href="https://miuirom.org/tablets/redmi-pad-pro">miuirom.org</a> &mdash; needed as brick-recovery option (and for <code>boot.img</code> if rooting)</td></tr>
+  <tr><td>7-Zip (or similar)</td><td>To extract <code>.7z</code> files &mdash; download from <a href="https://www.7-zip.org">7-zip.org</a></td></tr>
+</table>
+
+<div class="note">
+  <strong>Already in this folder (do NOT download):</strong>
+  <code>LineageOS-23.0-*-GAPPS-EXT4-GSI.7z</code> / <code>.img</code>,
+  <code>vbmeta.img</code>, <code>vbmeta_system.img</code>, <code>patched_boot.img</code>,
+  <code>KernelSU_v3.2.4.apk</code>, <code>ksud-android</code>,
+  <code>flash.bat</code>, <code>flash.ps1</code>, <code>check_vbmeta.py</code>, <code>Mi_Unlock_Tool/</code>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="prereq">2. Prerequisites &amp; Backup</h2>
+
+<div class="danger">
+  <strong>&#9888; DISCLAIMER</strong>
+  <p>This software is provided &ldquo;as is&rdquo;, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. This guide and associated scripts were generated with the assistance of artificial intelligence and have not undergone formal verification or quality assurance.</p>
+  <p>By proceeding, you acknowledge that:</p>
+  <ul>
+    <li>Flashing custom firmware will <strong>permanently wipe all data</strong> on your device. Backup your data before beginning.</li>
+    <li>There is <strong>no guarantee of future updates</strong> or ongoing support for this software.</li>
+    <li>No security audits have been performed. Use at your own discretion.</li>
+    <li>The entire risk arising out of the use or performance of this software remains with you. In no event shall the author be held liable for any claim, damages, or other liability, whether in contract, tort, or otherwise, arising from or in connection with the use of this software.</li>
+    <li><strong>Device damage, including bricked devices, data loss, or hardware failure, is solely your responsibility.</strong></li>
+  </ul>
+</div>
+
+<div class="danger">
+  <strong>&#9888; Unlocking wipes your data</strong>
+  <p>The unlock process and flashing will factory reset your tablet. Back up everything first.</p>
+</div>
+
+<ul>
+  <li><strong>Back up</strong> your photos, documents, and any important files to a PC or cloud</li>
+  <li><strong>Charge</strong> your tablet to at least 70%</li>
+  <li><strong>Install platform-tools</strong> &mdash; download from Google, extract and drop the <code>platform-tools</code> folder into this folder</li>
+  <li><strong>Install 7-Zip</strong> &mdash; needed to extract the GSI <code>.7z</code> file (the <code>.img</code> is already extracted in this package)</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="unlock">3. Unlock Bootloader</h2>
+
+<p>Xiaomi requires a waiting period (usually <strong>7 days / 168 hours</strong>) after binding your account. You cannot skip this.</p>
+
+<h3>3.1 Enable Developer Options</h3>
+<ol>
+  <li>Go to <strong>Settings &rarr; About tablet &rarr; Detailed info &amp; specs</strong></li>
+  <li>Tap <strong>MIUI / HyperOS version</strong> 7 times until you see <em>"You are now a developer"</em></li>
+</ol>
+
+<h3>3.2 Enable OEM Unlock &amp; Bind Mi Account</h3>
+<ol>
+  <li>Go to <strong>Settings &rarr; Additional settings &rarr; Developer options</strong> (if no Developer options, see 3.1)</li>
+  <li>Enable <strong>OEM unlocking</strong></li>
+  <li>Enable <strong>USB debugging</strong></li>
+  <li>Tap <strong>Mi Unlock status</strong> &rarr; <strong>Add account and device</strong></li>
+  <li>You should see <em>"Added successfully"</em> &mdash; this starts the 168-hour timer</li>
+</ol>
+
+<div class="warning">
+  <strong>&#9432; Critical</strong>
+  <ul>
+    <li>Use <strong>mobile data</strong> (not Wi-Fi) when binding the account if your tablet has a SIM slot</li>
+    <li>Do <strong>NOT</strong> sign out of your Mi Account or reset the device during the waiting period &mdash; the timer will reset</li>
+    <li>Do <strong>NOT</strong> tap "Add account and device" again &mdash; repeating it resets the timer too</li>
+  </ul>
+</div>
+
+<h3>3.3 Unlock with Mi Unlock Tool</h3>
+<ol>
+  <li>Open the <code>Mi_Unlock_Tool</code> folder (included in this package) and run <code>miflash_unlock.exe</code></li>
+  <li>Run <code>miflash_unlock.exe</code> and sign in with the <strong>same Mi Account</strong> that's on your tablet</li>
+  <li>Power off your tablet, then boot into <strong>fastboot mode</strong>: hold <strong>Volume Down + Power</strong> until you see the fastboot logo</li>
+  <li>Connect the tablet to your PC with a USB cable</li>
+  <li>In the Mi Unlock Tool, click <strong>Unlock</strong> &rarr; <strong>Unlock anyway</strong></li>
+  <li>Wait for the process to finish &mdash; the tablet will reboot automatically</li>
+</ol>
+
+<div class="note">
+  <strong>Note:</strong> If you see <em>"Please unlock 168 hours later"</em> or a similar timer, you must wait. After the waiting period, repeat from step 3.3 (power off &rarr; fastboot &rarr; unlock).<br><br>
+  <strong>Alternative (may skip wait):</strong> Install <strong>Xiaomi Community app</strong>, go to Me &rarr; Unlock bootloader. Some users report instant approval here.
+</div>
+
+<!-- ============================================================ -->
+<h2 id="install">4. Flash LineageOS GSI</h2>
+
+<p class="note">The <code>.img</code> file is already extracted in this folder. If missing, extract <code>LineageOS-23.0-20260109-GAPPS-EXT4-GSI.7z</code> using 7-Zip.</p>
+
+<!-- --- Option A: Automated --- -->
+<h3 style="margin-top:28px;"><span class="tag tag-green">A</span> Automated &mdash; flash.bat</h3>
+
+<div class="step">
+  <div class="label">Option A</div>
+  <h3>Run the automated flasher</h3>
+  <ol>
+    <li>Boot tablet into <strong>fastboot mode</strong> (Volume Down + Power) and connect to PC</li>
+    <li>Double-click <code>flash.bat</code> or run from CMD as administrator</li>
+    <li>The script will handle every step: vbmeta &rarr; fastbootd &rarr; flash GSI &rarr; wipe &rarr; reboot</li>
+    <li>First boot takes <strong>5&ndash;15 minutes</strong></li>
+  </ol>
+  </div>
+
+<h4>Root after Option A</h4>
+<p>Root is optional &mdash; only needed if your HyperOS version differs from <code>dizi_eea_global_images_OS3.0.2.0.WNSEUXM_20260421.0000.00_16.0_eea_7e549d23d8.tgz</code> or the pre-patched boot doesn't work. Magisk is broken on dizi; use KernelSU.</p>
+<ol>
+  <li>After booting LineageOS, install <code>KernelSU_v3.2.4.apk</code> (included in this folder)</li>
+  <li>Copy your stock <code>boot.img</code> to the device</li>
+  <li>Open KernelSU &rarr; <strong>Install</strong> &rarr; select <code>boot.img</code> &rarr; patch it</li>
+  <li>Copy the generated <code>patched_boot.img</code> back to your PC</li>
+  <li>Reboot to fastboot and run:</li>
+</ol>
+<pre><code>fastboot flash boot patched_boot.img
+fastboot reboot</code></pre>
+
+<p class="note">Advanced: use the included <code>ksud-android</code> CLI via ADB instead &mdash; see Option B root section.</p>
+
+<!-- --- Option B: Manual --- -->
+<h3 style="margin-top:28px;"><span class="tag tag-blue">B</span> Manual &mdash; step by step</h3>
+
+<div class="step">
+  <div class="label">Option B</div>
+  <h3>Flash manually via fastboot commands</h3>
+
+  <h4>B1 &mdash; Disable AVB verification</h4>
+  <p>Boot into <strong>fastboot mode</strong> (Volume Down + Power). Connect to PC. Run:</p>
+  <pre><code>fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
+fastboot --disable-verity --disable-verification flash vbmeta_system vbmeta_system.img</code></pre>
+  <p class="note">Both <code>vbmeta.img</code> and <code>vbmeta_system.img</code> are provided in this folder.</p>
+
+  <h4>B2 &mdash; Reboot to fastbootd</h4>
+  <pre><code>fastboot reboot fastboot</code></pre>
+  <p class="note">Screen changes from orange text to <strong>blue text</strong> (fastbootd).</p>
+
+  <h4>B3 &mdash; Flash GSI</h4>
+  <pre><code>fastboot flash system LineageOS-23.0-20260109-GAPPS-EXT4-GSI.img</code></pre>
+
+  <div class="warning">
+    <strong>&#9432; Not enough space?</strong> Delete product logical partitions first:
+    <pre><code>fastboot delete-logical-partition product_a
+fastboot delete-logical-partition product_b</code></pre>
+    Then retry the flash.
+  </div>
+
+  <h4>B4 &mdash; Wipe &amp; reboot</h4>
+  <pre><code>fastboot -w
+fastboot reboot</code></pre>
+  <p class="note">First boot takes <strong>5&ndash;15 minutes</strong>. Be patient.</p>
+</div>
+
+<h4>Root after Option B</h4>
+<p>Root is optional &mdash; only needed if your HyperOS version differs from <code>dizi_eea_global_images_OS3.0.2.0.WNSEUXM_20260421.0000.00_16.0_eea_7e549d23d8.tgz</code> or the pre-patched boot doesn't work. Magisk is broken on dizi; use KernelSU.</p>
+<ol>
+  <li>After booting LineageOS, install <code>KernelSU_v3.2.4.apk</code> (included in this folder)</li>
+  <li>Copy your stock <code>boot.img</code> to the device</li>
+  <li>Open KernelSU &rarr; <strong>Install</strong> &rarr; select <code>boot.img</code> &rarr; patch it</li>
+  <li>Copy the generated <code>patched_boot.img</code> back to your PC</li>
+  <li>Reboot to fastboot and flash:</li>
+</ol>
+<pre><code>fastboot flash boot patched_boot.img
+fastboot reboot</code></pre>
+
+<h4>Alternative &mdash; patch via ADB with ksud</h4>
+<p>Use the included <code>ksud-android</code> CLI for on-device patching:</p>
+<pre><code>adb push ksud-android /data/local/tmp/ksud
+adb push boot.img /data/local/tmp/boot.img
+adb shell chmod +x /data/local/tmp/ksud
+adb shell /data/local/tmp/ksud boot-patch -b /data/local/tmp/boot.img
+adb pull /data/local/tmp/patched_boot.img
+fastboot flash boot patched_boot.img
+fastboot reboot</code></pre>
+
+<!-- ============================================================ -->
+<h2 id="trouble">6. Troubleshooting</h2>
+
+<table>
+  <tr><td>Bootloop</td><td>You likely skipped or mis-ran the vbmeta flash. Go back to step 4.2 and make sure both vbmeta images are flashed with <code>--disable-verity --disable-verification</code>. Re-run <code>flash.bat</code> or <code>flash.ps1</code> entirely.</td></tr>
+  <tr><td>Not enough space</td><td>Delete logical partitions (step 4.4 note) or ensure you extracted the EXT4 GSI (~3.2 GB) &mdash; it needs enough free super partition space</td></tr>
+  <tr><td>Stuck at logo</td><td>Force reboot by holding Power + Volume Up for 10+ seconds. If it persists, reflash from step 4.2</td></tr>
+  <tr><td>Can't boot at all</td><td>Re-flash the stock HyperOS fastboot ROM using <strong>Mi Flash Tool</strong> with "clean all" (not "lock") to recover</td></tr>
+  <tr><td>Fastboot not detecting device</td><td>Install Xiaomi USB drivers or use the driver installer included in the Mi Unlock Tool folder (<code>MiUsbDriver.exe</code>)</td></tr>
+  <tr><td>Camera / stylus / sensors not working</td><td>GSIs are generic &mdash; some device-specific hardware may not work perfectly. Check XDA forums for workarounds</td></tr>
+  <tr><td>Magisk bootloop</td><td>Use <strong>KernelSU</strong> instead (see section 5). Magisk is broken on dizi.</td></tr>
+</table>
+
+<div class="footer">
+  LineageOS GSI by <a href="https://github.com/MisterZtr/LineageOS_gsi">MisterZtr</a> &bull; Guide prepared 2026-05-26
+</div>
+
+</body>
+</html>
