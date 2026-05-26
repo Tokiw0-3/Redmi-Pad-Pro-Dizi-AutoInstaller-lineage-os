@@ -177,7 +177,7 @@
     <li>Download your stock HyperOS fastboot ROM from <a href="https://miuirom.org/tablets/redmi-pad-pro">miuirom.org</a></li>
     <li>Extract the <code>.tgz</code> with 7-Zip</li>
     <li>If the ROM contains <code>payload.bin</code> instead of raw images, use <a href="https://github.com/vgdn1942/payload_dumper">payload_dumper</a> to extract them</li>
-    <li>Copy <code>vbmeta.img</code>, <code>vbmeta_system.img</code>, and <code>boot.img</code> into this folder, replacing the provided files</li>
+    <li>Copy <code>vbmeta.img</code>, <code>vbmeta_system.img</code>, and <code>boot.img</code> into this folder</li>
   </ol>
 </div>
 
@@ -278,6 +278,29 @@
 
 <p class="note">The <code>.img</code> file is already extracted in this folder. If missing, extract <code>LineageOS-23.0-20260109-GAPPS-EXT4-GSI.7z</code> using 7-Zip.</p>
 
+<div class="warning">
+  <strong>&#9432; Using a different GSI version (e.g. LineageOS 23.2 instead of 23.0)?</strong>
+  <p><code>flash.bat</code> expects the exact filename <code>LineageOS-23.0-20260109-GAPPS-EXT4-GSI.img</code> (hardcoded). To use any other GSI version with the script:</p>
+  <ol>
+    <li>Extract your <code>.7z</code> &rarr; you get a file like <code>LineageOS-23.2-20260524-GAPPS-EXT4-GSI.img</code></li>
+    <li><strong>Rename it</strong> to <code>LineageOS-23.0-20260109-GAPPS-EXT4-GSI.img</code></li>
+    <li>Run <code>flash.bat</code> &mdash; it will find the image and flash it</li>
+  </ol>
+  <p class="note">Renaming only changes the label, not the contents. The image itself is untouched.</p>
+</div>
+
+<div class="warning">
+  <strong>&#9432; Different HyperOS version &mdash; renaming your own vbmeta for Option B (manual)?</strong>
+  <p>The <code>flash.bat</code> script uses the pre-patched <code>vbmeta.img</code> in this folder. It cannot be changed without editing the script. But if you use <strong>Option B (manual)</strong>, you can substitute your own vbmeta:</p>
+  <ol>
+    <li>Extract <code>vbmeta.img</code> and <code>vbmeta_system.img</code> from your stock ROM (see requirements section above)</li>
+    <li><strong>Rename</strong> your clean/stock <code>vbmeta.img</code> &rarr; <code>patched_vbmeta.img</code> so it's clear this is your version's file</li>
+    <li>Place both <code>patched_vbmeta.img</code> and <code>vbmeta_system.img</code> (from your ROM) into this folder</li>
+    <li>In Option B1, use the renamed file: <code>fastboot --disable-verity --disable-verification flash vbmeta patched_vbmeta.img</code></li>
+  </ol>
+  <p class="note">Naming it <code>patched_vbmeta.img</code> keeps the original pre-patched <code>vbmeta.img</code> intact in case you need it later.</p>
+</div>
+
 <!-- --- Option A: Automated --- -->
 <h3 style="margin-top:28px;"><span class="tag tag-green">A</span> Automated &mdash; flash.bat</h3>
 
@@ -317,7 +340,7 @@ fastboot reboot</code></pre>
   <p>Boot into <strong>fastboot mode</strong> (Volume Down + Power). Connect to PC. Run:</p>
   <pre><code>fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
 fastboot --disable-verity --disable-verification flash vbmeta_system vbmeta_system.img</code></pre>
-  <p class="note">Both <code>vbmeta.img</code> and <code>vbmeta_system.img</code> are provided in this folder.</p>
+  <p class="note">Both <code>vbmeta.img</code> and <code>vbmeta_system.img</code> are provided in this folder. If you extracted your own, rename your clean <code>vbmeta.img</code> &rarr; <code>patched_vbmeta.img</code> and use: <code>fastboot --disable-verity --disable-verification flash vbmeta patched_vbmeta.img</code></p>
 
   <h4>B2 &mdash; Reboot to fastbootd</h4>
   <pre><code>fastboot reboot fastboot</code></pre>
@@ -325,6 +348,7 @@ fastboot --disable-verity --disable-verification flash vbmeta_system vbmeta_syst
 
   <h4>B3 &mdash; Flash GSI</h4>
   <pre><code>fastboot flash system LineageOS-23.0-20260109-GAPPS-EXT4-GSI.img</code></pre>
+  <p class="note">If your GSI has a different filename, replace it in the command, or rename your .img to match.</p>
 
   <div class="warning">
     <strong>&#9432; Not enough space?</strong> Delete product logical partitions first:
