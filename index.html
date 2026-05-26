@@ -123,6 +123,17 @@
 <h1>Redmi Pad Pro &mdash; Stock to LineageOS GSI</h1>
 <p>Device: <strong>Redmi Pad Pro (dizi)</strong> &mdash; Complete guide: stock HyperOS &rarr; unlock bootloader &rarr; flash LineageOS GSI with GApps</p>
 
+<div class="step" style="border-color: rgba(0,200,255,0.3);">
+  <div class="label" style="color: #50c8ff;">&#9650; Updating from 23.0 &rarr; 23.2 (no data loss)</div>
+  <p>If LineageOS 23.0 is already installed and you want to update to <strong>23.2 (2026.05.24)</strong>, do <em>not</em> run <code>flash.bat</code> &mdash; it wipes your data.</p>
+  <ol>
+    <li>Boot to fastboot (Vol Down + Power) &rarr; <code>fastboot reboot fastboot</code></li>
+    <li><code>fastboot flash system LineageOS-23.2-20260524-GAPPS-EXT4-GSI.img</code></li>
+    <li><code>fastboot reboot</code></li>
+  </ol>
+  <p class="note">If space is insufficient, run <code>fastboot delete-logical-partition product_a</code> and <code>fastboot delete-logical-partition product_b</code> before step 2. First boot may take 5&ndash;15 min. If it bootloops, clean-flash with data wipe.</p>
+</div>
+
 <div class="info-box">
   <dl>
     <dt>Target ROM</dt>
